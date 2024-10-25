@@ -3,6 +3,7 @@ const outputHoursEl = document.getElementById('output-hours');
 const outputMinutesEl = document.getElementById('output-minutes');
 const outputSecondsEl = document.getElementById('output-seconds');
 
+// # Funzione che genera un oggetto rappresentante il tempo fra due date
 const timesBetweenDates = (fromDate, toDate) => {
   // recupero i ms dagli oggetti "Date"
   const msFromDate = fromDate.getTime();
@@ -23,29 +24,33 @@ const timesBetweenDates = (fromDate, toDate) => {
   const minutes = Math.floor((msBetweenDates % msPerHour) / msPerMinute);
   const seconds = Math.floor((msBetweenDates % msPerMinute) / msPerSecond);
 
+  // Genero un oggetto contenente il tempo tra le date e lo do in output
   return { days, hours, minutes, seconds };
 };
 
+// # Funzione aggiorna l'interfaccia
 const updateClockInterface = (days, hours, minutes, seconds) => {
-  // aggiorno il dom
   outputDaysEl.innerText = `${days}`.padStart(2, '0');
   outputHoursEl.innerText = `${hours}`.padStart(2, '0');
   outputMinutesEl.innerText = `${minutes}`.padStart(2, '0');
   outputSecondsEl.innerText = `${seconds}`.padStart(2, '0');
 };
 
+// # Funzione che gestisce l'avanzamento del countdown
 const countdownHandler = () => {
   // Recupero i due momenti di interesse
   const now = new Date();
   const midnight = new Date('2024-10-26 00:00:00');
 
-  // recupero i ms di differenza fra i due momenti
+  // Creo 4 costanti contenenti la differenza di tempo tra i due momenti di interesse
   const { days, hours, minutes, seconds } = timesBetweenDates(now, midnight);
+
+  // Aggiorno l'interfaccia
   updateClockInterface(days, hours, minutes, seconds);
 };
 
-// lego il countdown handler all'intervallo per eseguirlo ogni secondo
+// Lego il countdown handler all'intervallo per eseguirlo ogni secondo
 const clockInterval = setInterval(countdownHandler, 1000);
 
-// eseguo il countdown handler al caricamento della pagina
+// Eseguo il countdown handler al caricamento della pagina
 countdownHandler();
