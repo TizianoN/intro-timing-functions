@@ -37,14 +37,15 @@ const updateClockInterface = (days, hours, minutes, seconds) => {
 const countdownHandler = () => {
   // Recupero i due momenti di interesse
   const now = new Date();
-  const midnight = new Date('2024-10-26 12:41:00');
+  const midnight = new Date('2024-10-26 00:00:00');
 
   // recupero i ms di differenza fra i due momenti
   const { days, hours, minutes, seconds } = timesBetweenDates(now, midnight);
   updateClockInterface(days, hours, minutes, seconds);
-
-  return countdownHandler;
 };
 
 // lego il countdown handler all'intervallo per eseguirlo ogni secondo
-const clockInterval = setInterval(countdownHandler(), 1000);
+const clockInterval = setInterval(countdownHandler, 1000);
+
+// eseguo il countdown handler al caricamento della pagina
+countdownHandler();
